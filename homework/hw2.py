@@ -12,7 +12,7 @@ def number_length(num: int) -> int:
     number_length(5000) -> 4
     number_length(0) -> 1
     """
-    pass
+    return len(str(num))
 
 
 def list_of_multiples(num: int, length: Optional[int]) -> List[int]:
@@ -27,21 +27,36 @@ def list_of_multiples(num: int, length: Optional[int]) -> List[int]:
     list_of_multiples(12, 10) -> [12, 24, 36, 48, 60, 72, 84, 96, 108, 120]
     ist_of_multiples(4, None) -> []
     """
-    pass
+
+    def foo():
+        for i in range(length):
+            yield i * num + num
+
+    return list(foo()) if length else []
 
 
-def normalize(input_str) -> str:
+def normalize(input_str: str) -> str:
     """
     Create a function that takes a string. If the string is all uppercase characters,
      convert it to lowercase and add an exclamation mark at the end.
 
-    :param foo:
+    :param input_str:
     :return:
     normalize("CAPS LOCK DAY IS OVER") -> "Caps lock day is over!"
     normalize("Today is not caps lock day.") -> "Today is not caps lock day."
 
     """
-    pass
+    if all(s.isupper() for s in input_str.split()):
+        o = []
+        for i, s in enumerate(input_str.split()):
+            if i == 0:
+                o.append(s.title())
+                continue
+            o.append(s.lower())
+
+        return " ".join(o) + "!"
+
+    return input_str
 
 
 def cat_dog(num: int) -> str:
@@ -62,4 +77,11 @@ def cat_dog(num: int) -> str:
     cat_dog(5) -> "Dog"
     cat_dog(15) -> "CatDog"
     """
-    pass
+    ret = ""
+    if num and not num % 3:
+        ret += "Cat"
+    if num and not num % 5:
+        ret += "Dog"
+    if not ret:
+        ret = str(num)
+    return ret
