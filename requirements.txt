@@ -1,0 +1,6 @@
+pytest
+pytest-watch
+python-dotenv
+pandas
+questionary
+GitPython
