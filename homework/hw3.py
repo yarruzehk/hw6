@@ -1,24 +1,12 @@
-# The Solar Project - (Because its not warm enough outside to be speaking about solar power)
-#  You will submit this project individually but work collaboratively. You will also be graded as a team meaning
-#  if 1 member does not submit the code to their repository, and response on blackboard
-#  but the other 3 team members do both parts perfectly. The final grade project will be a 75% for everyone.
-#
-#  Black Board Submission
-#    Submit a review of each member of the as part of the blackboard submission.
-#    1. I am not expecting much here, just 2 or 3 sentences reviewing each team member.
-#    2. What did you enjoy about the project?
-#    3. What did you not enjoy?
-
-#  Code Submission:
-#    Use the data set for creating  /data/756874_system_power_20210207.csv
-#    Required functions in the git repository are below and should be located under /homework/hw3.py
-from datetime import datetime
-from typing import Dict
-
-
-def hourly_demand_summary() -> Dict[datetime, float]:
+def read_solar_data(p: str) -> List[Tuple[datetime, float]]:
     """
-    This function will return an hourly breakdown of the dataset.
+    This function will return data from the csv file. Follow the specific format
+    """
+    ...
+
+def hourly_demand_summary(data: List[Tuple[datetime,float]]) -> Dict[datetime, float]:
+    """
+    This function will return an hourly breakdown of the dataset. This hourly data will include the hour before meaning datetime(2020,2,1,1,0,0) will range from 01:00 - 01:59
     {
         datetime(2020,2,1,0,0): 0.0,
         datetime(2020,2,1,1,0): 0.0,
@@ -29,9 +17,9 @@ def hourly_demand_summary() -> Dict[datetime, float]:
     ...
 
 
-def daily_demand_summary() -> Dict[datetime, float]:
+def daily_demand_summary(data: List[Tuple[datetime, float]]) -> Dict[datetime, float]:
     """
-    This function will return an daily breakdown of the dataset.
+    This function will return an daily breakdown of the dataset. This daily data will include infromation from 00:00:00 - 23:59:59 each day.
     {
         datetime(2020,2,1): 0.0,
         datetime(2020,2,2): 0.0,
@@ -42,14 +30,14 @@ def daily_demand_summary() -> Dict[datetime, float]:
     ...
 
 
-def weekly_power_summary() -> float:
+def weekly_power_summary(data: List[Tuple[datetime, float]]) -> List[Tuple[datetime,float]]:
     """
-    Summary of total power produced during the week
+    Summary of total power produced during the week. A week will be defined as Sunday 00:00 to Saturday 23:59:59. Be careful on how you determine Saturday and Sunday.
     """
     ...
 
 
-def maximum_hourly_data() -> datetime:
+def maximum_hourly_data(data: List[Tuple[datetime,float]]) -> datetime:
     """
     This function will return hour that produced the maximum total power.
     e.g. datetime(2020,2,1,12): 100
@@ -58,3 +46,9 @@ def maximum_hourly_data() -> datetime:
 
     """
     ...
+    
+def max_average_power_produced(data: List[Tuple[datetime,float]]) -> Tuple[datetime, float]:
+  """
+  Return the max real power from the dataset provided. Also provide the datetime which produced the maximum power. This result should look like datetime(2021,2,1,12,5), 500
+  """
+  ...
