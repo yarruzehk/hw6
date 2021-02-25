@@ -1,54 +1,61 @@
-def read_solar_data(p: str) -> List[Tuple[datetime, float]]:
-    """
-    This function will return data from the csv file. Follow the specific format
-    """
-    ...
+from collections import defaultdict
+from typing import List, Tuple, Dict, Iterable
+from datetime import datetime, timedelta
 
-def hourly_demand_summary(data: List[Tuple[datetime,float]]) -> Dict[datetime, float]:
-    """
-    This function will return an hourly breakdown of the dataset. This hourly data will include the hour before meaning datetime(2020,2,1,1,0,0) will range from 01:00 - 01:59
-    {
-        datetime(2020,2,1,0,0): 0.0,
-        datetime(2020,2,1,1,0): 0.0,
-        ...,
-        datetime(2020,2,7,23,0): 0.0,
-    }
-    """
-    ...
+
+def read_solar_data(
+    p: str = "../data/756874_system_power_20210207.csv",
+) -> Iterable[Tuple[datetime, float]]:
+    with open(p, "r") as fp:
+        data = fp.readlines()
+    for idx, row in enumerate(data):
+        if idx == 0:
+            continue
+        date, power = row.split(",")
+        date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S %z")
+        yield date, float(power)
+
+
+def trunc_date_to_hour(dt: datetime, daily=False):
+    if daily:
+        return dt.replace(hour=0, minute=0, second=0, tzinfo=None)
+    return dt.replace(minute=0, second=0, microsecond=0, tzinfo=None)
+
+
+def move_to_sunday(dt: datetime):
+    dt = trunc_date_to_hour(dt, True) - timedelta(days=dt.weekday()) + timedelta(days=6)
+    return dt
+
+
+def hourly_demand_summary(data: List[Tuple[datetime, float]]) -> Dict[datetime, float]:
+    ret = defaultdict(lambda: 0)
+    for date, power in data:
+        ret[trunc_date_to_hour(date)] += power
+    return dict(ret)
 
 
 def daily_demand_summary(data: List[Tuple[datetime, float]]) -> Dict[datetime, float]:
-    """
-    This function will return an daily breakdown of the dataset. This daily data will include infromation from 00:00:00 - 23:59:59 each day.
-    {
-        datetime(2020,2,1): 0.0,
-        datetime(2020,2,2): 0.0,
-        ...,
-        datetime(2020,2,7): 0.0,
-    }
-    """
-    ...
+    ret = defaultdict(lambda: 0)
+    for date, power in data:
+        ret[trunc_date_to_hour(date, True)] += power
+    return dict(ret)
 
 
-def weekly_power_summary(data: List[Tuple[datetime, float]]) -> List[Tuple[datetime,float]]:
-    """
-    Summary of total power produced during the week. A week will be defined as Sunday 00:00 to Saturday 23:59:59. Be careful on how you determine Saturday and Sunday.
-    """
-    ...
+def weekly_power_summary(
+    data: List[Tuple[datetime, float]]
+) -> List[Dict[datetime, float]]:
+    ret = defaultdict(lambda: 0)
+    for date, power in data:
+        ret[move_to_sunday(date)] += power
+    return dict(ret)
 
 
-def maximum_hourly_data(data: List[Tuple[datetime,float]]) -> datetime:
-    """
-    This function will return hour that produced the maximum total power.
-    e.g. datetime(2020,2,1,12): 100
-         datetime(2020,2,1,13): 200
-    :return datetime(2020,2,1,13)
+def maximum_hourly_data(data: List[Tuple[datetime, float]]) -> datetime:
+    demand = hourly_demand_summary(data)
+    return max(demand, key=demand.get)
 
-    """
-    ...
-    
-def max_average_power_produced(data: List[Tuple[datetime,float]]) -> Tuple[datetime, float]:
-  """
-  Return the max real power from the dataset provided. Also provide the datetime which produced the maximum power. This result should look like datetime(2021,2,1,12,5), 500
-  """
-  ...
+
+def max_average_power_produced(
+    data: List[Tuple[datetime, float]]
+) -> Tuple[datetime, float]:
+    return max(data, key=lambda x: x[1])
