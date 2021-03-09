@@ -1,6 +1,6 @@
 from collections import defaultdict
-from typing import List, Tuple, Dict, Iterable
 from datetime import datetime, timedelta
+from typing import Dict, Iterable, List, Tuple
 
 
 def read_solar_data(

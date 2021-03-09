@@ -1,4 +1,4 @@
-from typing import List
+from typing import Iterable, List
 
 # BE CAREFUL OF SCOPE WHEN WORKING ON THESE PROBLEMS
 list_of_names: List[str] = [
@@ -24,7 +24,8 @@ def filter_list_of_names(input_str: str) -> List[str]:
 # Complete a function below.
 # Remove the name "vision" from the list on line 1. Return the remaining items of the list
 def remove_vision(input_str: str = None) -> List[str]:
-    ...
+    list_of_names.remove("vision")
+    return list_of_names
 
 
 # PROBLEM 3 - 10 pts
@@ -47,7 +48,20 @@ def return_last_match(input_str: str) -> str:
 #
 # Everything must be correctly defined on function along with passing many different cases. The best attempt
 # of the class will also receive and additional 5 pts on the exam.
+def default_filter(x):
+    return True
+
+
+def first(items: Iterable, *, default=..., condition: callable = None):
+    condition = condition or default_filter
+    try:
+        return next(i for i in items if condition(i))
+    except StopIteration:
+        if default == ...:
+            raise
+        return default
+
 
 if __name__ == "__main__":
-    # write any tests here
-    ...
+    print(remove_vision())
+    print(remove_vision())

@@ -1,11 +1,7 @@
-from exam.exam1 import (
-    remove_vision,
-    list_of_names,
-    filter_list_of_names,
-    return_last_match,
-)
-
 import pytest
+
+from exam.exam1 import (filter_list_of_names, list_of_names, remove_vision,
+                        return_last_match)
 
 
 def test_vision_is_not_in_list():

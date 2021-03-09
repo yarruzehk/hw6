@@ -1,4 +1,5 @@
 import pytest
+
 from quiz.quiz1 import first
 
 
