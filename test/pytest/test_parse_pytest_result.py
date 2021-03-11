@@ -1,6 +1,6 @@
-from util import count_passing_tests
-
 import pytest
+
+from util import count_passing_tests
 
 
 @pytest.fixture()

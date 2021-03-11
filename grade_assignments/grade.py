@@ -1,11 +1,12 @@
 import os
-from pathlib import Path
-from shutil import copy, rmtree
 
-import pandas as pd
 from git import Repo
 from settings import config
-from util import count_passing_tests, snake_case
+from pathlib import Path
+from shutil import copy, rmtree
+import pandas as pd
+
+from util import snake_case, count_passing_tests
 
 
 def load_sheet(sheet_name: str = config.sheet):

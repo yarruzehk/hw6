@@ -17,15 +17,14 @@ list_of_names: List[str] = [
 # This function will filter the list based on the input_str. If the name starts with
 # the input string the result will be included return statement of the function.
 def filter_list_of_names(input_str: str) -> List[str]:
-    ...
+    return [x for x in list_of_names if x.startswith(input_str)]
 
 
 # PROBLEM 2 - 5 pts
 # Complete a function below.
 # Remove the name "vision" from the list on line 1. Return the remaining items of the list
-def remove_vision(input_str: str = None) -> List[str]:
-    list_of_names.remove("vision")
-    return list_of_names
+def remove_vision() -> List[str]:
+    return [x for x in list_of_names if x != "vision"]
 
 
 # PROBLEM 3 - 10 pts
@@ -34,7 +33,7 @@ def remove_vision(input_str: str = None) -> List[str]:
 # example if the input_str = 'x' the output would be 'alex'
 # example if the input_str = 'a' the output would be 'wanda'
 def return_last_match(input_str: str) -> str:
-    ...
+    return next((x for x in reversed(list_of_names) if x.endswith(input_str)), None)
 
 
 # BONUS PROBLEM - 100% on the exam
