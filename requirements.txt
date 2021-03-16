@@ -3,4 +3,5 @@ pytest-watch
 python-dotenv
 pandas
 questionary
+fastapi
 GitPython

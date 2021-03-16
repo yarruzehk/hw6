@@ -42,9 +42,5 @@ def update1_ep(index: int, employee: str, new_color: str = None, method: str = "
 
 @router.get("/list")
 def list_ep():
-    ret = []
-    for i, h in enumerate(houses):
-        ret.append(
-            {"id": id(h), "index": i, "house": h, "square_footage": h.square_footage()}
-        )
-    return ret
+    print(type(houses[0]))
+    return houses
