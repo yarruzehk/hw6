@@ -1,5 +1,22 @@
-import uvicorn
+# main application will go here
+from typing import Optional
 
-if __name__ == "__main__":
-    uvicorn.run("app:app", reload=True)
-    # app:app  first app refers to app.py second app is the "app" used by uvicorn
+from fastapi import FastAPI
+
+from house.endpoints import router as house_router
+from users.endpoints import router
+
+app = FastAPI()
+
+app.include_router(router, prefix="/users")
+app.include_router(house_router, prefix="/house")
+
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: Optional[str] = None):
+    return {"item_id": item_id, "q": q}
