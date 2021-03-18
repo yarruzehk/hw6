@@ -4,7 +4,7 @@ import requests
 
 from house.model import House
 
-base_url = "http://localhost:8000"
+base_url = "http://127.0.0.1:8000"
 
 
 def get_house_list() -> str:
