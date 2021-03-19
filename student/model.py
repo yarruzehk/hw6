@@ -28,7 +28,7 @@ class Student(User):
     @property
     def status(self):
         now = datetime.now()
-        if self.infection_date == None:
+        if self.infection_date is None:
             return "healthy"
         if timedelta(days=14) < now - self.infection_date:
             return "vac"

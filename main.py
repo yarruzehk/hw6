@@ -1,18 +1,17 @@
-# main application will go here
 from typing import Optional
 
 from fastapi import FastAPI
 
-from house.endpoints import router as house_router
-from users.endpoints import router
+from student.endpoints import router as student_router
+from classroom.endpoints import router as classroom_router
 
-app = FastAPI()
+app = FastAPI(title='COVID Tracking Project')
 
-app.include_router(router, prefix="/users")
-app.include_router(house_router, prefix="/house")
+app.include_router(student_router, prefix="/student")
+app.include_router(classroom_router, prefix="/classroom")
 
 
-@app.get("/")
+@app.get("/reset")
 def read_root():
     return {"Hello": "World"}
 
